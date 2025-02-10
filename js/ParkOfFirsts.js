@@ -10,110 +10,94 @@ class ParkOfFirsts extends Phaser.Scene {
         this.load.image("lake_background", "data/lake.png");
         this.load.image("player", "data/colby.jpg");
         this.load.image("lake_object", "data/lake_zone.png");
+        this.load.image("lake_cutscene", "data/cold_plunge_memory.png");
     }
 
     create() {
         console.log("Scene ParkOfFirsts is running.");
-        this.children.removeAll();
-        this.cameras.main.fadeIn(1000, 0, 0, 0);  // Smooth fade-in effect
 
-        const lake_background = this.add.image(896, 511, "lake_background").setDisplaySize(1792, 1022);
-        console.log("lake_background added.");
-        console.log(this.textures.exists("lake_background") ? "lake_background texture loaded." : "lake_background texture missing!");
-        this.children.bringToTop(lake_background);
-
-
+        // Initialize background and interactive object
+        this.lake_background = this.add.image(896, 511, "lake_background").setDisplaySize(1792, 1022);
         this.player = new Player(this, 896, 511);
-        console.log("Player created at: 100, 100");
 
-        this.lake_object = this.physics.add.sprite(400, 300, "lake_object").setInteractive();
-        console.log("Interactive lake_object added at: 400, 300");
+        this.lake_object = this.physics.add.sprite(400, 300, "lake_object");
+        this.interactionTriggered = false;  // Flag to ensure cutscene plays only once
+        this.playerEnabled = false;  // Disable player movement at the start
 
-        // Start the scene dialogue
-        this.startSceneDialogue([
+        // Start initial scene dialogue
+        this.startDialogue([
             "Welcome to the park. It feels peaceful and familiar.",
             "Perhaps there's something here that will help you remember."
         ]);
     }
 
-    startSceneDialogue(dialogueLines) {
-        console.log("Starting scene dialogue...");
+    startDialogue(dialogueLines) {
         let dialogueIndex = 0;
-    
         const dialogueBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
         const dialogueText = this.add.text(100, 940, dialogueLines[dialogueIndex], { fontSize: "24px", color: "#fff" });
-    
-        const advanceDialogue = () => {
+
+        this.input.on('pointerdown', () => {
             dialogueIndex++;
             if (dialogueIndex < dialogueLines.length) {
                 console.log(`Dialogue line ${dialogueIndex}: ${dialogueLines[dialogueIndex]}`);
                 dialogueText.setText(dialogueLines[dialogueIndex]);
             } else {
-                console.log("Scene dialogue finished. Enabling player movement.");
                 dialogueBox.destroy();
                 dialogueText.destroy();
-                this.input.off('pointerdown', advanceDialogue);  // Remove the listener after finishing dialogue
-                this.enablePlayer();
+                this.playerEnabled = true;  // Enable player movement and exploration
             }
-        };
-    
-        this.input.on('pointerdown', advanceDialogue);  // Attach the listener once
-    }
-    
-
-    enablePlayer() {
-        console.log("Player movement enabled.");
-        this.physics.add.overlap(this.player.player, this.lake_object, this.checkInteraction, null, this);
+        });
     }
 
     update() {
-        this.player.update();
-    }
+        if (this.playerEnabled) {
+            this.player.update();
+        }
 
-    checkInteraction(player, lake_object) {
-        console.log("Checking interaction...");
-        if (this.input.keyboard.checkDown(this.player.cursors.space, 500)) {
-            console.log("Interaction detected. Starting cutscene...");
-            this.showCutscene([
+        if (this.checkManualCollision(this.player.player, this.lake_object)) {
+            if (this.interactionTriggered) return;  // Exit if already triggered
+            this.interactionTriggered = true;  // Ensure cutscene only plays once
+            
+            this.showLakeCutscene([
                 "The cold plunge! A moment of adventure and laughter.",
                 "You remember the joy it brought."
             ]);
         }
     }
 
-    showCutscene(cutsceneLines) {
-        console.log("Showing cutscene...");
+    checkManualCollision(spriteA, spriteB) {
+        const boundsA = spriteA.getBounds();
+        const boundsB = spriteB.getBounds();
+        return Phaser.Geom.Intersects.RectangleToRectangle(boundsA, boundsB);
+    }
+
+    showLakeCutscene(lake_cutscenelines) {
         let cutsceneIndex = 0;
 
-        const cutsceneBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
-        const cutsceneText = this.add.text(100, 940, cutsceneLines[cutsceneIndex], { fontSize: "24px", color: "#fff" });
-        console.log(`Cutscene line 0: ${cutsceneLines[cutsceneIndex]}`);
+        // Hide the player and apt_object
+        this.player.player.setVisible(false);
+        this.lake_object.setVisible(false);
 
-        this.trigger.once('pointerdown', () => {
-            this.advanceCutscene(cutsceneLines, cutsceneIndex + 1, cutsceneBox, cutsceneText);
+        const lake_cutsceneImage = this.add.image(896, 511, "lake_cutscene").setDisplaySize(1792, 1022);
+        const lake_cutscenebox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
+        const lake_cutsceneText = this.add.text(100, 940, lake_cutscenelines[cutsceneIndex], { fontSize: "24px", color: "#fff" });
+
+        this.input.once('pointerdown', () => {
+            this.advanceCutscene(lake_cutscenelines, cutsceneIndex + 1, lake_cutscenebox, lake_cutsceneText, lake_cutsceneImage);
         });
     }
 
-    advanceCutscene(cutsceneLines, cutsceneIndex, cutsceneBox, cutsceneText) {
-        if (cutsceneIndex < cutsceneLines.length) {
-            console.log(`Cutscene line ${cutsceneIndex}: ${cutsceneLines[cutsceneIndex]}`);
+    advanceCutscene(lake_cutscenelines, cutsceneIndex, lake_cutscenebox, lake_cutsceneText, lake_cutsceneImage) {
+        if (cutsceneIndex < lake_cutscenelines.length) {
+            lake_cutsceneText.setText(lake_cutscenelines[cutsceneIndex]);
 
-            cutsceneText.setText(cutsceneLines[cutsceneIndex]);
             this.input.once('pointerdown', () => {
-                this.advanceCutscene(cutsceneLines, cutsceneIndex + 1, cutsceneBox, cutsceneText);
+                this.advanceCutscene(lake_cutscenelines, cutsceneIndex + 1, lake_cutscenebox, lake_cutsceneText, lake_cutsceneImage);
             });
         } else {
-            console.log("Cutscene finished. Transitioning to HouseOfTraditions...");
-            
-            cutsceneBox.destroy();
-            cutsceneText.destroy();
-
+            this.playerEnabled = false;
             this.cameras.main.fadeOut(1000, 0, 0, 0);
-            this.time.delayedCall(1000, () => {
-                console.log("Transition complete. Starting HouseOfTraditions.");
-                this.input.removeAllListeners();
-                this.scene.start("HouseOfTraditions");
-            });
+            this.scene.start("HouseOfTraditions");
         }
     }
 }

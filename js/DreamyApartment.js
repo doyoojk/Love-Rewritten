@@ -19,10 +19,7 @@ class DreamyApartment extends Phaser.Scene {
         // Initialize the apt_background and interactive apt_object
         this.apt_background = this.add.image(896, 511, "apt_background").setDisplaySize(1792, 1022);
         this.player = new Player(this, 896, 511);  // Center the player
-        console.log("apt_background and player created.");
-
         this.trigger = this.physics.add.sprite(400, 300, "apt_object").setInteractive().setVisible(true);
-        console.log("Interactive apt_object added at 400, 300");
 
         // Start the initial dialogue
         this.startDialogue([
@@ -69,7 +66,6 @@ class DreamyApartment extends Phaser.Scene {
         // Hide the player and apt_object
         this.player.player.setVisible(false);
         this.trigger.setVisible(false);
-        console.log("Player and apt_object hidden.");
     
         // Show apt_cutscene apt_background and first dialogue line
         const apt_cutsceneImage = this.add.image(896, 511, "apt_cutscene").setDisplaySize(1792, 1022);
@@ -80,31 +76,28 @@ class DreamyApartment extends Phaser.Scene {
         this.input.removeAllListeners();
     
         this.input.once('pointerdown', () => {
-            this.advanceAptCutscene(apt_cutsceneLines, apt_cutsceneIndex + 1, apt_cutsceneBox, apt_cutsceneText, apt_cutsceneImage);
+            this.advanceCutscene(apt_cutsceneLines, apt_cutsceneIndex + 1, apt_cutsceneBox, apt_cutsceneText, apt_cutsceneImage);
         });
     }
     
-    advanceAptCutscene(apt_cutsceneLines, apt_cutsceneIndex, apt_cutsceneBox, apt_cutsceneText, apt_cutsceneImage) {
+    advanceCutscene(apt_cutsceneLines, apt_cutsceneIndex, apt_cutsceneBox, apt_cutsceneText, apt_cutsceneImage) {
         if (apt_cutsceneIndex < apt_cutsceneLines.length) {
             apt_cutsceneText.setText(apt_cutsceneLines[apt_cutsceneIndex]);
             
             this.input.once('pointerdown', () => {
-                this.advanceAptCutscene(apt_cutsceneLines, apt_cutsceneIndex + 1, apt_cutsceneBox, apt_cutsceneText, apt_cutsceneImage);
+                this.advanceCutscene(apt_cutsceneLines, apt_cutsceneIndex + 1, apt_cutsceneBox, apt_cutsceneText, apt_cutsceneImage);
             });
         } else {
             console.log("apt_cutscene finished. Transitioning to ParkOfFirsts...");
     
-            this.playerEnabled = false;
-            this.sceneTransitioning = true;
-    
+            this.playerEnabled = false;    
             this.cameras.main.fadeOut(2000, 0, 0, 0);
             this.scene.start("ParkOfFirsts");
-
         }
     }
     
     update() {
-        if (this.playerEnabled && !this.sceneTransitioning) {
+        if (this.playerEnabled) {
             this.player.update();
         }
     }
