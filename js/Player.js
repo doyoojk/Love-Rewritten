@@ -1,7 +1,7 @@
 export default class Player {
-    constructor(scene, x, y) {
+    constructor(scene, x, y, spriteKey = "player") {  // Accept spriteKey as an optional argument
         this.scene = scene;
-        this.player = scene.add.image(x, y, "player").setOrigin(0.5);
+        this.player = scene.add.image(x, y, spriteKey).setOrigin(0.5);
         this.keys = scene.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
             down: Phaser.Input.Keyboard.KeyCodes.S,
@@ -22,6 +22,7 @@ export default class Player {
         } else if (this.keys.down.isDown) {
             this.player.y += 25;
         }
+        console.log(`Player position: (${this.player.x}, ${this.player.y})`);
     }
 
     destroy() {

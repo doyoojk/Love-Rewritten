@@ -9,7 +9,7 @@ class BeachOfLaughter extends Phaser.Scene {
         console.log("Preloading assets for BeachOfLaughter...");
         this.load.image("beach_background", "data/beach.png");
         this.load.image("beach_cutscene", "data/sunset_memory.png");
-        this.load.image("music_box_object", "data/music_box.png");
+        this.load.image("radio_object", "data/radio.png");
         this.load.image("player", "data/colby.png");
     }
 
@@ -21,7 +21,7 @@ class BeachOfLaughter extends Phaser.Scene {
         this.player = new Player(this, 896, 511);  // Center the player
         console.log("Beach background and player created.");
 
-        this.music_box_object = this.physics.add.sprite(400, 300, "music_box_object").setInteractive().setVisible(true);
+        this.radio_object = this.physics.add.sprite(1621, 186, "radio_object").setInteractive().setVisible(true).setScale(1.2);
         console.log("Music box added at: 400, 300");
 
         this.playerEnabled = false;  // Player movement is initially disabled
@@ -54,7 +54,7 @@ class BeachOfLaughter extends Phaser.Scene {
     startExploration() {
         this.playerEnabled = true;  // Allow player movement
 
-        this.music_box_object.on("pointerdown", () => {
+        this.radio_object.on("pointerdown", () => {
             console.log("Music box clicked. Starting cutscene...");
             this.showBeachCutscene([
                 , "The sunset was beautiful that day.",
@@ -68,7 +68,7 @@ class BeachOfLaughter extends Phaser.Scene {
 
         // Hide the player and object
         this.player.player.setVisible(false);
-        this.music_box_object.setVisible(false);
+        this.radio_object.setVisible(false);
 
         // Show cutscene background and first dialogue line
         const beach_cutsceneImage = this.add.image(896, 511, "beach_cutscene").setDisplaySize(1792, 1022);

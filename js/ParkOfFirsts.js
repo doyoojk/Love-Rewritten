@@ -9,7 +9,7 @@ class ParkOfFirsts extends Phaser.Scene {
         console.log("Preloading assets for ParkOfFirsts...");
         this.load.image("lake_background", "data/lake.png");
         this.load.image("player", "data/colby.png");
-        this.load.image("lake_object", "data/lake_zone.png");
+        this.load.image("lake_zone", "data/lake_zone.png");
         this.load.image("lake_cutscene", "data/cold_plunge_memory.png");
     }
 
@@ -20,7 +20,8 @@ class ParkOfFirsts extends Phaser.Scene {
         this.lake_background = this.add.image(896, 511, "lake_background").setDisplaySize(1792, 1022);
         this.player = new Player(this, 896, 511);
 
-        this.lake_object = this.physics.add.sprite(400, 300, "lake_object");
+        this.lake_zone = this.physics.add.sprite(446, 36, "lake_zone");
+        console.log("Lake object created at: 446, 36");
         this.interactionTriggered = false;  // Flag to ensure cutscene plays only once
         this.playerEnabled = false;  // Disable player movement at the start
 
@@ -53,7 +54,7 @@ class ParkOfFirsts extends Phaser.Scene {
             this.player.update();
         }
 
-        if (this.checkManualCollision(this.player.player, this.lake_object)) {
+        if (this.checkManualCollision(this.player.player, this.lake_zone)) {
             if (this.interactionTriggered) return;  // Exit if already triggered
             this.interactionTriggered = true;  // Ensure cutscene only plays once
             
@@ -75,7 +76,7 @@ class ParkOfFirsts extends Phaser.Scene {
 
         // Hide the player and apt_object
         this.player.player.setVisible(false);
-        this.lake_object.setVisible(false);
+        this.lake_zone.setVisible(false);
 
         const lake_cutsceneImage = this.add.image(896, 511, "lake_cutscene").setDisplaySize(1792, 1022);
         const lake_cutscenebox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
@@ -95,7 +96,7 @@ class ParkOfFirsts extends Phaser.Scene {
             });
         } else {
             this.playerEnabled = false;
-            this.cameras.main.fadeOut(2000, 0, 0, 0);
+            this.cameras.main.fadeOut(3000, 0, 0, 0);
             this.time.delayedCall(1000, () => {
                 this.scene.start("HouseOfTraditions");
             });

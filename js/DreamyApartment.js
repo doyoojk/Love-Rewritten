@@ -9,17 +9,18 @@ class DreamyApartment extends Phaser.Scene {
         console.log("Preloading assets for DreamyApartment...");
         this.load.image("apt_background", "data/apartment.png");
         this.load.image("apt_cutscene", "data/cold_plunge_memory.png");
-        this.load.image("apt_object", "data/photo_frame.png");
-        this.load.image("player", "data/colby.png");
+        this.load.image("photo_frame", "data/photo_frame.png");
+        // this.load.image("player", "data/colby.png");
     }
 
     create() {
         console.log(`Scene DreamyApartment is running.`);
 
-        // Initialize the apt_background and interactive apt_object
+        // Initialize the apt_background and interactive photo_frame
         this.apt_background = this.add.image(896, 511, "apt_background").setDisplaySize(1792, 1022);
-        this.player = new Player(this, 896, 511);  // Center the player
-        this.trigger = this.physics.add.sprite(400, 300, "apt_object").setInteractive().setVisible(true);
+        this.player = new Player(this, 896, 511, "photo_frame");  // Center the player
+        this.trigger = this.physics.add.sprite(896, 186, "photo_frame").setInteractive().setVisible(true);
+        console.log("object created at: 896, 186");
 
         // Start the initial dialogue
         this.startDialogue([
@@ -52,7 +53,7 @@ class DreamyApartment extends Phaser.Scene {
         this.playerEnabled = true;  // Allow player movement
 
         this.trigger.on("pointerdown", () => {
-            console.log("apt_object clicked. Starting apt_cutscene...");
+            console.log("photo_frame clicked. Starting apt_cutscene...");
             this.showapt_cutscene([ ,
                 "You see an old photo frame.",
                 "Memories of your first moments here flood back."
@@ -63,7 +64,7 @@ class DreamyApartment extends Phaser.Scene {
     showapt_cutscene(apt_cutsceneLines) {
         let apt_cutsceneIndex = 0;
     
-        // Hide the player and apt_object
+        // Hide the player and photo_frame
         this.player.player.setVisible(false);
         this.trigger.setVisible(false);
     
@@ -91,7 +92,7 @@ class DreamyApartment extends Phaser.Scene {
             console.log("apt_cutscene finished. Transitioning to ParkOfFirsts...");
     
             this.playerEnabled = false;    
-            this.cameras.main.fadeOut(2000, 0, 0, 0);
+            this.cameras.main.fadeOut(3000, 0, 0, 0);
             this.time.delayedCall(1000, () => {
                 this.scene.start("ParkOfFirsts");
             });
