@@ -6,53 +6,107 @@ class HouseOfTraditions extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("background", "data/hanok.png");
-        this.load.image("colby", "data/colby.jpg");
-        this.load.image("object", "data/grandma_npc.png");
+        console.log("Preloading assets for HouseOfTraditions...");
+        this.load.image("hanok_background", "data/hanok.png");
+        this.load.image("player", "data/colby.jpg");
+        this.load.image("grandma_object", "data/grandma_npc.png");
+        this.load.image("hanok_cutscene", "data/grandma_meeting_memory.png");
     }
 
     create() {
-        this.add.image(896, 511, "background").setDisplaySize(1792, 1022);
+        console.log(`Scene HouseOfTraditions is running.`);
 
+        // Initialize background and player
+        this.hanok_background = this.add.image(896, 511, "hanok_background").setDisplaySize(1792, 1022);
+        this.player = new Player(this, 896, 511);  // Center the player
+        console.log("Hanok background and player created.");
 
-        // Create player
-        this.player = new Player(this, 100, 100);
+        this.grandma_object = this.physics.add.sprite(400, 300, "grandma_object").setInteractive().setVisible(true);
+        console.log("Grandma NPC added at: 400, 300");
 
-        // Add interactive object (Grandma NPC)
-        this.object = this.physics.add.sprite(400, 300, "object").setInteractive();
-        
-        // Check for interaction
-        this.physics.add.overlap(this.player.player, this.object, this.checkInteraction, null, this);
+        this.playerEnabled = false;  // Player movement is initially disabled
+
+        // Start the initial dialogue
+        this.startDialogue([
+            "This is a traditional Korean house.",
+            "You remember visiting here for the first time and meeting someone special."
+        ]);
     }
 
-    update() {
-        this.player.update();
+    startDialogue(dialogueLines) {
+        let dialogueIndex = 0;
+        const dialogueBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
+        const dialogueText = this.add.text(100, 940, dialogueLines[dialogueIndex], { fontSize: "24px", color: "#fff" });
+
+        this.input.on('pointerdown', () => {
+            dialogueIndex++;
+
+            if (dialogueIndex < dialogueLines.length) {
+                dialogueText.setText(dialogueLines[dialogueIndex]);
+            } else {
+                dialogueBox.destroy();
+                dialogueText.destroy();
+                this.startExploration();  // Enable player movement and exploration
+            }
+        });
     }
 
-    checkInteraction(player, object) {
-        if (this.input.keyboard.checkDown(this.player.cursors.space, 500)) {
-            this.showCutscene([
+    startExploration() {
+        this.playerEnabled = true;  // Allow player movement
+
+        this.grandma_object.on("pointerdown", () => {
+            console.log("Grandma NPC clicked. Starting cutscene...");
+            this.showHanokCutscene([
                 "You remember meeting her for the first time.",
                 "It was a special moment over delicious food."
             ]);
+        });
+    }
+
+    showHanokCutscene(hanok_cutsceneLines) {
+        let cutsceneIndex = 0;
+
+        // Hide the player and object
+        this.player.player.setVisible(false);
+        this.grandma_object.setVisible(false);
+
+        // Show cutscene background and first dialogue line
+        const hanok_cutsceneImage = this.add.image(896, 511, "hanok_cutscene").setDisplaySize(1792, 1022);
+        const hanok_cutsceneBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
+        const hanok_cutsceneText = this.add.text(100, 940, hanok_cutsceneLines[cutsceneIndex], { fontSize: "24px", color: "#fff" });
+
+        // Remove all previous listeners to avoid overlap
+        this.input.removeAllListeners();
+
+        this.input.once('pointerdown', () => {
+            this.advanceCutscene(hanok_cutsceneLines, cutsceneIndex + 1, hanok_cutsceneBox, hanok_cutsceneText, hanok_cutsceneImage);
+        });
+    }
+
+    advanceCutscene(hanok_cutsceneLines, cutsceneIndex, hanok_cutsceneBox, hanok_cutsceneText, hanok_cutsceneImage) {
+        if (cutsceneIndex < hanok_cutsceneLines.length) {
+            hanok_cutsceneText.setText(hanok_cutsceneLines[cutsceneIndex]);
+
+            this.input.once('pointerdown', () => {
+                this.advanceCutscene(hanok_cutsceneLines, cutsceneIndex + 1, hanok_cutsceneBox, hanok_cutsceneText, hanok_cutsceneImage);
+            });
+        } else {
+            console.log("Hanok cutscene finished. Transitioning to BeachOfLaughter...");
+            hanok_cutsceneBox.destroy();
+            hanok_cutsceneText.destroy();
+            hanok_cutsceneImage.destroy();
+
+            this.playerEnabled = false;
+
+            this.cameras.main.fadeOut(2000, 0, 0, 0);
+            this.scene.start("BeachOfLaughter");
         }
     }
 
-    showCutscene(cutsceneLines) {
-        let cutsceneIndex = 0;
-        const cutsceneBox = this.add.rectangle(448, 450, 896, 100, 0x000000, 0.7).setOrigin(0.5);
-        const cutsceneText = this.add.text(100, 430, cutsceneLines[cutsceneIndex], { fontSize: "16px", color: "#fff" });
-
-        cutsceneBox.setInteractive().on("pointerdown", () => {
-            cutsceneIndex++;
-            if (cutsceneIndex < cutsceneLines.length) {
-                cutsceneText.setText(cutsceneLines[cutsceneIndex]);
-            } else {
-                cutsceneBox.destroy();
-                cutsceneText.destroy();
-                this.scene.start("BeachOfLaughter");
-            }
-        });
+    update() {
+        if (this.playerEnabled) {
+            this.player.update();
+        }
     }
 }
 

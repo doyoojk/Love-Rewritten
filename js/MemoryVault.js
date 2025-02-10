@@ -7,7 +7,7 @@ class MemoryVault extends Phaser.Scene {
 
     preload() {
         this.load.image("background", "data/vault.png");
-        this.load.image("colby", "data/colby.jpg");
+        this.load.image("player", "data/colby.png");
         this.load.image("cutscene", "data/love_letter_reveal.png");
     }
 

@@ -7,7 +7,7 @@ class BeachOfLaughter extends Phaser.Scene {
 
     preload() {
         this.load.image("background", "data/beach.png");
-        this.load.image("colby", "data/colby.jpg");
+        this.load.image("colby", "data/colby.png");
         this.load.image("object", "data/music_box.png");
     }
 

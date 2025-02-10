@@ -10,7 +10,7 @@ class DreamyApartment extends Phaser.Scene {
         this.load.image("apt_background", "data/apartment.png");
         this.load.image("apt_cutscene", "data/cold_plunge_memory.png");
         this.load.image("apt_object", "data/photo_frame.png");
-        this.load.image("player", "data/colby.jpg");
+        this.load.image("player", "data/colby.png");
     }
 
     create() {

@@ -8,7 +8,7 @@ class ParkOfFirsts extends Phaser.Scene {
     preload() {
         console.log("Preloading assets for ParkOfFirsts...");
         this.load.image("lake_background", "data/lake.png");
-        this.load.image("player", "data/colby.jpg");
+        this.load.image("player", "data/colby.png");
         this.load.image("lake_object", "data/lake_zone.png");
         this.load.image("lake_cutscene", "data/cold_plunge_memory.png");
     }
@@ -39,7 +39,6 @@ class ParkOfFirsts extends Phaser.Scene {
         this.input.on('pointerdown', () => {
             dialogueIndex++;
             if (dialogueIndex < dialogueLines.length) {
-                console.log(`Dialogue line ${dialogueIndex}: ${dialogueLines[dialogueIndex]}`);
                 dialogueText.setText(dialogueLines[dialogueIndex]);
             } else {
                 dialogueBox.destroy();
