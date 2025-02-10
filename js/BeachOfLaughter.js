@@ -92,12 +92,7 @@ class BeachOfLaughter extends Phaser.Scene {
             });
         } else {
             console.log("Beach cutscene finished. Transitioning to MemoryVault...");
-            beach_cutsceneBox.destroy();
-            beach_cutsceneText.destroy();
-            beach_cutsceneImage.destroy();
-
             this.playerEnabled = false;
-
             this.cameras.main.fadeOut(2000, 0, 0, 0);
             this.time.delayedCall(1000, () => {
                 this.scene.start("MemoryVault");

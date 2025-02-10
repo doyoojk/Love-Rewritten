@@ -92,13 +92,8 @@ class HouseOfTraditions extends Phaser.Scene {
             });
         } else {
             console.log("Hanok cutscene finished. Transitioning to BeachOfLaughter...");
-            hanok_cutsceneBox.destroy();
-            hanok_cutsceneText.destroy();
-            hanok_cutsceneImage.destroy();
-
             this.playerEnabled = false;
-
-            this.cameras.main.fadeOut(1000, 0, 0, 0);
+            this.cameras.main.fadeOut(2000, 0, 0, 0);
             this.time.delayedCall(1000, () => {
                 this.scene.start("BeachOfLaughter");
             });
