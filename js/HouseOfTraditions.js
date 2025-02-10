@@ -57,7 +57,7 @@ class HouseOfTraditions extends Phaser.Scene {
         this.grandma_object.on("pointerdown", () => {
             console.log("Grandma NPC clicked. Starting cutscene...");
             this.showHanokCutscene([
-                "You remember meeting her for the first time.",
+                ,"You remember meeting her for the first time.",
                 "It was a special moment over delicious food."
             ]);
         });
@@ -98,8 +98,10 @@ class HouseOfTraditions extends Phaser.Scene {
 
             this.playerEnabled = false;
 
-            this.cameras.main.fadeOut(2000, 0, 0, 0);
-            this.scene.start("BeachOfLaughter");
+            this.cameras.main.fadeOut(1000, 0, 0, 0);
+            this.time.delayedCall(1000, () => {
+                this.scene.start("BeachOfLaughter");
+            });
         }
     }
 

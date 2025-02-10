@@ -92,7 +92,9 @@ class DreamyApartment extends Phaser.Scene {
     
             this.playerEnabled = false;    
             this.cameras.main.fadeOut(2000, 0, 0, 0);
-            this.scene.start("ParkOfFirsts");
+            this.time.delayedCall(1000, () => {
+                this.scene.start("ParkOfFirsts");
+            });
         }
     }
     

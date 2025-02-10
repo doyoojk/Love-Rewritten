@@ -95,8 +95,10 @@ class ParkOfFirsts extends Phaser.Scene {
             });
         } else {
             this.playerEnabled = false;
-            this.cameras.main.fadeOut(1000, 0, 0, 0);
-            this.scene.start("HouseOfTraditions");
+            this.cameras.main.fadeOut(2000, 0, 0, 0);
+            this.time.delayedCall(1000, () => {
+                this.scene.start("HouseOfTraditions");
+            });
         }
     }
 }

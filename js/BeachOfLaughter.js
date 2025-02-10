@@ -6,52 +6,109 @@ class BeachOfLaughter extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("background", "data/beach.png");
-        this.load.image("colby", "data/colby.png");
-        this.load.image("object", "data/music_box.png");
+        console.log("Preloading assets for BeachOfLaughter...");
+        this.load.image("beach_background", "data/beach.png");
+        this.load.image("beach_cutscene", "data/sunset_memory.png");
+        this.load.image("music_box_object", "data/music_box.png");
+        this.load.image("player", "data/colby.png");
     }
 
     create() {
-        this.add.image(448, 256, "background");
+        console.log(`Scene BeachOfLaughter is running.`);
 
-        // Create player
-        this.player = new Player(this, 100, 100);
+        // Initialize background and player
+        this.beach_background = this.add.image(896, 511, "beach_background").setDisplaySize(1792, 1022);
+        this.player = new Player(this, 896, 511);  // Center the player
+        console.log("Beach background and player created.");
 
-        // Add interactive object (music box)
-        this.object = this.physics.add.sprite(400, 300, "object").setInteractive();
-        
-        // Check for interaction
-        this.physics.add.overlap(this.player.player, this.object, this.checkInteraction, null, this);
+        this.music_box_object = this.physics.add.sprite(400, 300, "music_box_object").setInteractive().setVisible(true);
+        console.log("Music box added at: 400, 300");
+
+        this.playerEnabled = false;  // Player movement is initially disabled
+
+        // Start the initial dialogue
+        this.startDialogue([
+            "The sound of waves is calming.",
+            "You remember spending time here watching the sunset."
+        ]);
     }
 
-    update() {
-        this.player.update();
+    startDialogue(dialogueLines) {
+        let dialogueIndex = 0;
+        const dialogueBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
+        const dialogueText = this.add.text(100, 940, dialogueLines[dialogueIndex], { fontSize: "24px", color: "#fff" });
+
+        this.input.on('pointerdown', () => {
+            dialogueIndex++;
+
+            if (dialogueIndex < dialogueLines.length) {
+                dialogueText.setText(dialogueLines[dialogueIndex]);
+            } else {
+                dialogueBox.destroy();
+                dialogueText.destroy();
+                this.startExploration();  // Enable player movement and exploration
+            }
+        });
     }
 
-    checkInteraction(player, object) {
-        if (this.input.keyboard.checkDown(this.player.cursors.space, 500)) {
-            this.showCutscene([
-                "The sunset was beautiful that day.",
+    startExploration() {
+        this.playerEnabled = true;  // Allow player movement
+
+        this.music_box_object.on("pointerdown", () => {
+            console.log("Music box clicked. Starting cutscene...");
+            this.showBeachCutscene([
+                , "The sunset was beautiful that day.",
                 "You listened to the music and felt completely at peace."
             ]);
+        });
+    }
+
+    showBeachCutscene(beach_cutsceneLines) {
+        let cutsceneIndex = 0;
+
+        // Hide the player and object
+        this.player.player.setVisible(false);
+        this.music_box_object.setVisible(false);
+
+        // Show cutscene background and first dialogue line
+        const beach_cutsceneImage = this.add.image(896, 511, "beach_cutscene").setDisplaySize(1792, 1022);
+        const beach_cutsceneBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
+        const beach_cutsceneText = this.add.text(100, 940, beach_cutsceneLines[cutsceneIndex], { fontSize: "24px", color: "#fff" });
+
+        // Remove all previous listeners to avoid overlap
+        this.input.removeAllListeners();
+
+        this.input.once('pointerdown', () => {
+            this.advanceCutscene(beach_cutsceneLines, cutsceneIndex + 1, beach_cutsceneBox, beach_cutsceneText, beach_cutsceneImage);
+        });
+    }
+
+    advanceCutscene(beach_cutsceneLines, cutsceneIndex, beach_cutsceneBox, beach_cutsceneText, beach_cutsceneImage) {
+        if (cutsceneIndex < beach_cutsceneLines.length) {
+            beach_cutsceneText.setText(beach_cutsceneLines[cutsceneIndex]);
+
+            this.input.once('pointerdown', () => {
+                this.advanceCutscene(beach_cutsceneLines, cutsceneIndex + 1, beach_cutsceneBox, beach_cutsceneText, beach_cutsceneImage);
+            });
+        } else {
+            console.log("Beach cutscene finished. Transitioning to MemoryVault...");
+            beach_cutsceneBox.destroy();
+            beach_cutsceneText.destroy();
+            beach_cutsceneImage.destroy();
+
+            this.playerEnabled = false;
+
+            this.cameras.main.fadeOut(2000, 0, 0, 0);
+            this.time.delayedCall(1000, () => {
+                this.scene.start("MemoryVault");
+            });
         }
     }
 
-    showCutscene(cutsceneLines) {
-        let cutsceneIndex = 0;
-        const cutsceneBox = this.add.rectangle(448, 450, 896, 100, 0x000000, 0.7).setOrigin(0.5);
-        const cutsceneText = this.add.text(100, 430, cutsceneLines[cutsceneIndex], { fontSize: "16px", color: "#fff" });
-
-        cutsceneBox.setInteractive().on("pointerdown", () => {
-            cutsceneIndex++;
-            if (cutsceneIndex < cutsceneLines.length) {
-                cutsceneText.setText(cutsceneLines[cutsceneIndex]);
-            } else {
-                cutsceneBox.destroy();
-                cutsceneText.destroy();
-                this.scene.start("MemoryVault");
-            }
-        });
+    update() {
+        if (this.playerEnabled) {
+            this.player.update();
+        }
     }
 }
 
