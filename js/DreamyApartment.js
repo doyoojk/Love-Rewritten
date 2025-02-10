@@ -56,8 +56,8 @@ class DreamyApartment extends Phaser.Scene {
 
         this.trigger.on("pointerdown", () => {
             console.log("Object clicked. Starting cutscene...");
-            this.showCutscene([
-                ,"You see an old photo frame.",
+            this.showCutscene([ ,
+                "You see an old photo frame.",
                 "Memories of your first moments here flood back."
             ]);
         });
@@ -100,8 +100,8 @@ class DreamyApartment extends Phaser.Scene {
             cutsceneImage.destroy();
     
             // Manually destroy all scene elements
-            if (this.background) this.background = this.load.image("background", "data/lake.png"); // Remove background
-            if (this.trigger) this.trigger = this.load.image("object", "data/lake_zone.png");    // Remove object
+            if (this.background) this.background.destroy();  // Remove background
+            if (this.trigger) this.trigger.destroy();        // Remove object
             this.player.player.destroy();                    // Remove player sprite
             console.log("Background, player, and object destroyed.");
     
