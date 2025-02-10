@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love, Rewritten</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.js"></script>
+    <script type="module" src="js/MainMenu.js"></script>
+    <script type="module" src="js/DreamyApartment.js"></script>
+    <script type="module" src="js/ParkOfFirsts.js"></script>
+    <script type="module" src="js/HouseOfTraditions.js"></script>
+    <script type="module" src="js/BeachOfLaughter.js"></script>
+    <script type="module" src="js/MemoryVault.js"></script>
+    
+</head>
+<body>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-left: 15%;
+            padding-right: 15%;
+            padding-top: 3%;
+            background-color: #000;
+        }
+        canvas {
+            border: 5px solid white;
+        }
+    </style>
+    <div id="game-container"></div>
+    <script type="module">
+        import MainMenu from './js/MainMenu.js';
+        import DreamyApartment from './js/DreamyApartment.js';
+        import ParkOfFirsts from './js/ParkOfFirsts.js';
+        import HouseOfTraditions from './js/HouseOfTraditions.js';
+        import BeachOfLaughter from './js/BeachOfLaughter.js';
+        import MemoryVault from './js/MemoryVault.js';
+    
+        const config = {
+            type: Phaser.AUTO,
+            width: 1792,
+            height: 1022,
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    debug: false
+                }
+            },
+            scene: [MainMenu, DreamyApartment, ParkOfFirsts, HouseOfTraditions, BeachOfLaughter, MemoryVault]
+        };
+    
+        const game = new Phaser.Game(config);
+    </script>
+    
+</body>
+</html>
