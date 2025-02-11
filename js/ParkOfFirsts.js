@@ -10,7 +10,7 @@ class ParkOfFirsts extends Phaser.Scene {
         this.load.image("lake_background", "data/lake.png");
         this.load.image("player", "data/colby.png");
         this.load.image("lake_zone", "data/lake_zone.png");
-        this.load.image("lake_cutscene", "data/cold_plunge_memory.png");
+        this.load.image("lake_cutscene", "data/lake_cutscene.png");
         this.load.audio("lake_audio", "data/lake.mp3");
         this.load.audio("splash", "data/splash.wav");
         this.load.image("lake_overlay", "data/lake_overlay.png");
@@ -22,6 +22,7 @@ class ParkOfFirsts extends Phaser.Scene {
 
     create() {
         console.log("Scene ParkOfFirsts is running.");
+        this.cameras.main.fadeIn(1000, 0, 0, 0);   
 
         // Initialize background and interactive object
         this.lake_background = this.add.image(896, 511, "lake_background").setDisplaySize(1792, 1022);
@@ -45,8 +46,8 @@ class ParkOfFirsts extends Phaser.Scene {
 
     startDialogue(dialogueLines) {
         let dialogueIndex = 0;
-        const dialogueBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
-        const dialogueText = this.add.text(100, 940, dialogueLines[dialogueIndex], { fontSize: "24px", color: "#fff" });
+        const dialogueBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5).setDepth(100);
+        const dialogueText = this.add.text(100, 940, dialogueLines[dialogueIndex], { fontSize: "24px", color: "#fff" }).setDepth(101);
 
         this.input.on('pointerdown', () => {
             dialogueIndex++;
@@ -68,7 +69,7 @@ class ParkOfFirsts extends Phaser.Scene {
         // Check if the player is hovering over the lake
         if (this.checkManualCollision(this.player.player, this.lake_zone)) {
             if (!this.hoverTimer) {  // Start hover timer if not already started
-                this.hoverTimer = this.time.delayedCall(1000, () => {
+                this.hoverTimer = this.time.delayedCall(2300, () => {
                     if (this.interactionTriggered) return;  // Ensure cutscene only plays once
                     this.sound.play("splash");
                     this.interactionTriggered = true;

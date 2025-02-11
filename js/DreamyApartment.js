@@ -8,7 +8,7 @@ class DreamyApartment extends Phaser.Scene {
     preload() {
         console.log("Preloading assets for DreamyApartment...");
         this.load.image("apt_background", "data/apartment.png");
-        this.load.image("apt_cutscene", "data/cold_plunge_memory.png");
+        this.load.image("apt_cutscene", "data/apt_cutscene.png");
         this.load.image("photo_frame", "data/photo_frame.png");
         this.load.image("player", "data/colby.png");
         this.load.audio("apt_audio", "data/apt.mp3");
@@ -20,6 +20,7 @@ class DreamyApartment extends Phaser.Scene {
     }
 
     create() {
+        this.cameras.main.fadeIn(1000, 0, 0, 0);   
         console.log(`Scene DreamyApartment is running.`);
 
         // Initialize the apt_background and interactive photo_frame

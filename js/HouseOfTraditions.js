@@ -10,7 +10,7 @@ class HouseOfTraditions extends Phaser.Scene {
         this.load.image("hanok_background", "data/hanok.png");
         this.load.image("player", "data/colby.png");
         this.load.image("grandma_object", "data/grandma.png");
-        this.load.image("hanok_cutscene", "data/grandma_meeting_memory.png");
+        this.load.image("hanok_cutscene", "data/hanok_cutscene.png");
         this.load.audio("hanok_audio", "data/hanok.mp3");
         this.load.image("table_overlay", "data/table.png");
         this.load.image("bush_overlay", "data/bush.png");
@@ -22,6 +22,7 @@ class HouseOfTraditions extends Phaser.Scene {
 
     create() {
         console.log(`Scene HouseOfTraditions is running.`);
+        this.cameras.main.fadeIn(1000, 0, 0, 0);   
 
         this.hanok_audio = this.sound.add("hanok_audio");
         this.hanok_audio.play({ loop: true });
@@ -29,7 +30,7 @@ class HouseOfTraditions extends Phaser.Scene {
         this.table_overlay = this.add.image(896, 511, "table_overlay").setDisplaySize(1792, 1022).setDepth(25);
         this.bush_overlay = this.add.image(896, 511, "bush_overlay").setDisplaySize(1792, 1022).setDepth(25);
         this.player = new Player(this, 896, 511, "player_spritesheet");
-        this.grandma_object = this.physics.add.sprite(1571, 761, "grandma_object").setInteractive().setVisible(true).setOrigin(0.5).setScale(0.8);
+        this.grandma_object = this.physics.add.sprite(1571, 761, "grandma_object").setInteractive().setVisible(true).setOrigin(0.5);
         this.playerEnabled = false;  // Player movement is initially disabled
 
         // Start the initial dialogue
@@ -80,8 +81,8 @@ class HouseOfTraditions extends Phaser.Scene {
 
         // Show cutscene background and first dialogue line
         const hanok_cutsceneImage = this.add.image(896, 511, "hanok_cutscene").setDisplaySize(1792, 1022);
-        const hanok_cutsceneBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
-        const hanok_cutsceneText = this.add.text(100, 940, hanok_cutsceneLines[cutsceneIndex], { fontSize: "24px", color: "#fff" });
+        const hanok_cutsceneBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5).setDepth(100);
+        const hanok_cutsceneText = this.add.text(100, 940, hanok_cutsceneLines[cutsceneIndex], { fontSize: "24px", color: "#fff" }).setDepth(101);
 
         // Remove all previous listeners to avoid overlap
         this.input.removeAllListeners();
