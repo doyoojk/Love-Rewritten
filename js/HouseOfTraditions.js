@@ -8,7 +8,7 @@ class HouseOfTraditions extends Phaser.Scene {
     preload() {
         console.log("Preloading assets for HouseOfTraditions...");
         this.load.image("hanok_background", "data/hanok.png");
-        this.load.image("player", "data/colby.jpg");
+        this.load.image("player", "data/colby.pngd");
         this.load.image("grandma_object", "data/grandma.png");
         this.load.image("hanok_cutscene", "data/grandma_meeting_memory.png");
     }
@@ -98,6 +98,11 @@ class HouseOfTraditions extends Phaser.Scene {
     update() {
         if (this.playerEnabled) {
             this.player.update();
+
+            // Apply boundary checks to restrict movement
+            this.player.player.x = Math.max(this.player.player.x, 650); 
+            this.player.player.y = Math.max(this.player.player.y, 463);  
+        
         }
     }
 }

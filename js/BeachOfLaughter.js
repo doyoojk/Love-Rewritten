@@ -99,8 +99,24 @@ class BeachOfLaughter extends Phaser.Scene {
     update() {
         if (this.playerEnabled) {
             this.player.update();
+    
+            // Restrict entry into the zone where y < 475 and x < 1580
+            if (this.player.player.y < 475 && this.player.player.x < 1580) {
+                if (this.player.player.previousY >= 475) {
+                    // Block vertical movement into the restricted area
+                    this.player.player.y = 475;
+                } else {
+                    // Block horizontal movement into the restricted area
+                    this.player.player.x = 1580;
+                }
+            }
+    
+            // Update the previous position for future checks
+            this.player.player.previousX = this.player.player.x;
+            this.player.player.previousY = this.player.player.y;
         }
-    }
+    }    
+    
 }
 
 export default BeachOfLaughter;
