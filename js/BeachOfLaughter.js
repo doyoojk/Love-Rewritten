@@ -18,10 +18,10 @@ class BeachOfLaughter extends Phaser.Scene {
 
         // Initialize background and player
         this.beach_background = this.add.image(896, 511, "beach_background").setDisplaySize(1792, 1022);
-        this.player = new Player(this, 896, 511);  // Center the player
+        this.player = new Player(this, 966, 691); 
         console.log("Beach background and player created.");
 
-        this.radio_object = this.physics.add.sprite(1621, 186, "radio_object").setInteractive().setVisible(true).setScale(1.2);
+        this.radio_object = this.physics.add.sprite(1626, 141, "radio_object").setInteractive().setVisible(true).setScale(1.1);
         console.log("Music box added at: 400, 300");
 
         this.playerEnabled = false;  // Player movement is initially disabled

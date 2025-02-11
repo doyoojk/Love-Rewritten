@@ -12,15 +12,15 @@ export default class Player {
 
     update() {
         if (this.keys.left.isDown) {
-            this.player.x -= 25;
+            this.player.x -= 10;
         } else if (this.keys.right.isDown) {
-            this.player.x += 25;
+            this.player.x += 10;
         }
 
         if (this.keys.up.isDown) {
-            this.player.y -= 25;
+            this.player.y -= 10;
         } else if (this.keys.down.isDown) {
-            this.player.y += 25;
+            this.player.y += 10;
         }
         console.log(`Player position: (${this.player.x}, ${this.player.y})`);
     }

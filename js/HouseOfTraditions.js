@@ -18,10 +18,10 @@ class HouseOfTraditions extends Phaser.Scene {
 
         // Initialize background and player
         this.hanok_background = this.add.image(896, 511, "hanok_background").setDisplaySize(1792, 1022);
-        this.player = new Player(this, 896, 511);  // Center the player
+        this.player = new Player(this, 896, 511);
         console.log("Hanok background and player created.");
 
-        this.grandma_object = this.physics.add.sprite(1571, 761, "grandma_object").setInteractive().setVisible(true).setOrigin(0.5);
+        this.grandma_object = this.physics.add.sprite(1571, 761, "grandma_object").setInteractive().setVisible(true).setOrigin(0.5).setScale(0.8);
         console.log("Grandma NPC added at: 1571, 761");
 
         this.playerEnabled = false;  // Player movement is initially disabled

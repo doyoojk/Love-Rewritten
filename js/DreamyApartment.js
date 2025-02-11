@@ -10,7 +10,7 @@ class DreamyApartment extends Phaser.Scene {
         this.load.image("apt_background", "data/apartment.png");
         this.load.image("apt_cutscene", "data/cold_plunge_memory.png");
         this.load.image("photo_frame", "data/photo_frame.png");
-        // this.load.image("player", "data/colby.png");
+        this.load.image("player", "data/colby.png");
     }
 
     create() {
@@ -18,8 +18,8 @@ class DreamyApartment extends Phaser.Scene {
 
         // Initialize the apt_background and interactive photo_frame
         this.apt_background = this.add.image(896, 511, "apt_background").setDisplaySize(1792, 1022);
-        this.player = new Player(this, 896, 511, "photo_frame");  // Center the player
-        this.trigger = this.physics.add.sprite(896, 186, "photo_frame").setInteractive().setVisible(true);
+        this.player = new Player(this, 896, 511);  // Center the player
+        this.trigger = this.physics.add.sprite(886, 201, "photo_frame").setInteractive().setVisible(true).setScale(1.2);
         console.log("object created at: 896, 186");
 
         // Start the initial dialogue

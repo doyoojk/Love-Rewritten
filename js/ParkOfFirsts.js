@@ -8,7 +8,7 @@ class ParkOfFirsts extends Phaser.Scene {
     preload() {
         console.log("Preloading assets for ParkOfFirsts...");
         this.load.image("lake_background", "data/lake.png");
-        this.load.image("player", "data/colby.png");
+        // this.load.image("player", "data/colby.png");
         this.load.image("lake_zone", "data/lake_zone.png");
         this.load.image("lake_cutscene", "data/cold_plunge_memory.png");
     }
@@ -20,8 +20,7 @@ class ParkOfFirsts extends Phaser.Scene {
         this.lake_background = this.add.image(896, 511, "lake_background").setDisplaySize(1792, 1022);
         this.player = new Player(this, 896, 511);
 
-        this.lake_zone = this.physics.add.sprite(446, 36, "lake_zone");
-        console.log("Lake object created at: 446, 36");
+        this.lake_zone = this.physics.add.sprite(426, 121, "lake_zone").setScale(1.2);
         this.interactionTriggered = false;  // Flag to ensure cutscene plays only once
         this.playerEnabled = false;  // Disable player movement at the start
 
@@ -53,17 +52,30 @@ class ParkOfFirsts extends Phaser.Scene {
         if (this.playerEnabled) {
             this.player.update();
         }
-
+    
+        // Check if the player is hovering over the lake
         if (this.checkManualCollision(this.player.player, this.lake_zone)) {
-            if (this.interactionTriggered) return;  // Exit if already triggered
-            this.interactionTriggered = true;  // Ensure cutscene only plays once
-            
-            this.showLakeCutscene([
-                "The cold plunge! A moment of adventure and laughter.",
-                "You remember the joy it brought."
-            ]);
+            if (!this.hoverTimer) {  // Start hover timer if not already started
+                console.log("Player entered lake zone. Starting hover timer...");
+                this.hoverTimer = this.time.delayedCall(1200, () => {
+                    if (this.interactionTriggered) return;  // Ensure cutscene only plays once
+                    console.log("Hover time complete. Triggering cutscene...");
+                    this.interactionTriggered = true;
+                    this.showLakeCutscene([
+                        "The cold plunge! A moment of adventure and laughter.",
+                        "You remember the joy it brought."
+                    ]);
+                }, [], this);
+            }
+        } else {
+            if (this.hoverTimer) {
+                console.log("Player left lake zone. Resetting hover timer.");
+                this.hoverTimer.remove();  // Cancel the timer if the player leaves
+                this.hoverTimer = null;
+            }
         }
     }
+    
 
     checkManualCollision(spriteA, spriteB) {
         const boundsA = spriteA.getBounds();
