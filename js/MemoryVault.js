@@ -11,10 +11,14 @@ class MemoryVault extends Phaser.Scene {
         this.load.image("vault_object", "data/vault_object.png");
         this.load.image("final_cutscene", "data/love_letter_reveal.png");
         this.load.image("player", "data/colby.png");
+        this.load.audio("vault_audio", "data/vault.mp3");
     }
 
     create() {
         console.log("Scene MemoryVault is running.");
+        // Initialize and play vault audio
+        this.vault_audio = this.sound.add("vault_audio");
+        this.vault_audio.play({ loop: true });
 
         // Initialize background and player
         this.vault_background = this.add.image(896, 511, "vault_background").setDisplaySize(1792, 1022);
@@ -95,6 +99,7 @@ class MemoryVault extends Phaser.Scene {
         } else {
             console.log("Final cutscene finished. Returning to MainMenu...");
             this.playerEnabled = false;
+            this.vault_audio.stop();
             this.cameras.main.fadeOut(2000, 0, 0, 0);
     
             this.time.delayedCall(2000, () => {

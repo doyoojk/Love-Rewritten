@@ -8,15 +8,22 @@ class HouseOfTraditions extends Phaser.Scene {
     preload() {
         console.log("Preloading assets for HouseOfTraditions...");
         this.load.image("hanok_background", "data/hanok.png");
-        this.load.image("player", "data/colby.pngd");
+        this.load.image("player", "data/colby.png");
         this.load.image("grandma_object", "data/grandma.png");
         this.load.image("hanok_cutscene", "data/grandma_meeting_memory.png");
+        this.load.audio("hanok_audio", "data/hanok.mp3");
+        this.load.image("table_overlay", "data/table.png");
+        this.load.image("bush_overlay", "data/bush.png");
     }
 
     create() {
         console.log(`Scene HouseOfTraditions is running.`);
 
+        this.hanok_audio = this.sound.add("hanok_audio");
+        this.hanok_audio.play({ loop: true });
         this.hanok_background = this.add.image(896, 511, "hanok_background").setDisplaySize(1792, 1022);
+        this.table_overlay = this.add.image(896, 511, "table_overlay").setDisplaySize(1792, 1022).setDepth(25);
+        this.bush_overlay = this.add.image(896, 511, "bush_overlay").setDisplaySize(1792, 1022).setDepth(25);
         this.player = new Player(this, 896, 511);
         this.grandma_object = this.physics.add.sprite(1571, 761, "grandma_object").setInteractive().setVisible(true).setOrigin(0.5).setScale(0.8);
         this.playerEnabled = false;  // Player movement is initially disabled
@@ -30,8 +37,8 @@ class HouseOfTraditions extends Phaser.Scene {
 
     startDialogue(dialogueLines) {
         let dialogueIndex = 0;
-        const dialogueBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
-        const dialogueText = this.add.text(100, 940, dialogueLines[dialogueIndex], { fontSize: "24px", color: "#fff" });
+        const dialogueBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5).setDepth(100);
+        const dialogueText = this.add.text(100, 940, dialogueLines[dialogueIndex], { fontSize: "24px", color: "#fff" }).setDepth(101);
 
         this.input.on('pointerdown', () => {
             dialogueIndex++;
@@ -64,6 +71,8 @@ class HouseOfTraditions extends Phaser.Scene {
         // Hide the player and object
         this.player.player.setVisible(false);
         this.grandma_object.setVisible(false);
+        this.table_overlay.setVisible(false);
+        this.bush_overlay.setVisible(false);
 
         // Show cutscene background and first dialogue line
         const hanok_cutsceneImage = this.add.image(896, 511, "hanok_cutscene").setDisplaySize(1792, 1022);
@@ -88,6 +97,7 @@ class HouseOfTraditions extends Phaser.Scene {
         } else {
             console.log("Hanok cutscene finished. Transitioning to BeachOfLaughter...");
             this.playerEnabled = false;
+            this.hanok_audio.stop();
             this.cameras.main.fadeOut(2000, 0, 0, 0);
             this.time.delayedCall(1000, () => {
                 this.scene.start("BeachOfLaughter");
@@ -102,6 +112,14 @@ class HouseOfTraditions extends Phaser.Scene {
             // Apply boundary checks to restrict movement
             this.player.player.x = Math.max(this.player.player.x, 650); 
             this.player.player.y = Math.max(this.player.player.y, 463);  
+
+            if (this.player.player.y > 745) {
+                this.table_overlay.setVisible(false);
+            } else if (this.player.player.x > 1094) {
+                this.table_overlay.setVisible(false);
+            } else {
+                this.table_overlay.setVisible(true);
+            }
         
         }
     }

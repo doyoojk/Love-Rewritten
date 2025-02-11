@@ -11,6 +11,8 @@ class DreamyApartment extends Phaser.Scene {
         this.load.image("apt_cutscene", "data/cold_plunge_memory.png");
         this.load.image("photo_frame", "data/photo_frame.png");
         this.load.image("player", "data/colby.png");
+        this.load.audio("apt_audio", "data/apt.mp3");
+        this.load.image("apt_overlay", "data/apt_overlay.png");
     }
 
     create() {
@@ -18,8 +20,13 @@ class DreamyApartment extends Phaser.Scene {
 
         // Initialize the apt_background and interactive photo_frame
         this.apt_background = this.add.image(896, 511, "apt_background").setDisplaySize(1792, 1022);
+        this.apt_overlay = this.add.image(896, 511, "apt_overlay").setDisplaySize(1792, 1022).setDepth(15);
         this.player = new Player(this, 896, 511);  // Center the player
         this.trigger = this.physics.add.sprite(886, 201, "photo_frame").setInteractive().setVisible(true).setScale(1.2);
+
+        // Initialize and play the apt_audio
+        this.apt_audio = this.sound.add("apt_audio");
+        this.apt_audio.play({ loop: true });
 
         // Start the initial dialogue
         this.startDialogue([
@@ -65,6 +72,7 @@ class DreamyApartment extends Phaser.Scene {
         // Hide the player and photo_frame
         this.player.player.setVisible(false);
         this.trigger.setVisible(false);
+        this.apt_overlay.setVisible(false);
     
         // Show apt_cutscene apt_background and first dialogue line
         const apt_cutsceneImage = this.add.image(896, 511, "apt_cutscene").setDisplaySize(1792, 1022);
@@ -90,6 +98,7 @@ class DreamyApartment extends Phaser.Scene {
             console.log("apt_cutscene finished. Transitioning to ParkOfFirsts...");
     
             this.playerEnabled = false;    
+            this.apt_audio.stop();
             this.cameras.main.fadeOut(3000, 0, 0, 0);
             this.time.delayedCall(1000, () => {
                 this.scene.start("ParkOfFirsts");
@@ -100,6 +109,11 @@ class DreamyApartment extends Phaser.Scene {
     update() {
         if (this.playerEnabled) {
             this.player.update();
+            if (this.player.player.x > 1574 && this.player.player.y < 600){
+                this.apt_overlay.setVisible(true);
+            } else {
+                this.apt_overlay.setVisible(false);
+            }
         }
     }
 }

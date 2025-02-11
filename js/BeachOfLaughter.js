@@ -12,6 +12,7 @@ class BeachOfLaughter extends Phaser.Scene {
         this.load.image("radio_object", "data/radio.png");
         this.load.image("player", "data/colby.png");
         this.load.audio("goldfish", "data/goldfish.mp3");  // Preload the audio
+        this.load.audio("beach_audio", "data/beach.mp3");
     }
 
     create() {
@@ -23,6 +24,9 @@ class BeachOfLaughter extends Phaser.Scene {
 
         this.radio_object = this.physics.add.sprite(1626, 141, "radio_object").setInteractive().setVisible(true);
         this.goldfishMusic = this.sound.add("goldfish");  // Create the audio instance
+
+        this.beach_audio = this.sound.add("beach_audio");
+        this.beach_audio.play({ loop: true });
 
         this.playerEnabled = false;  // Player movement is initially disabled
 
@@ -55,6 +59,7 @@ class BeachOfLaughter extends Phaser.Scene {
         this.playerEnabled = true;  // Allow player movement
 
         this.radio_object.on("pointerdown", () => {
+            this.beach_audio.stop();
             this.showBeachCutscene([
                 , "The sunset was beautiful that day.",
                 "You listened to the music and felt completely at peace."
