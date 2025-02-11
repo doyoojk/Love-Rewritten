@@ -19,10 +19,7 @@ class MemoryVault extends Phaser.Scene {
         // Initialize background and player
         this.vault_background = this.add.image(896, 511, "vault_background").setDisplaySize(1792, 1022);
         this.player = new Player(this, 896, 511);  // Center the player
-        console.log("Vault background and player created.");
-
         this.vault_object = this.physics.add.sprite(906, 141, "vault_object").setInteractive();
-        console.log("Vault object added at: 906, 141");
 
         this.playerEnabled = false;  // Player movement is initially disabled
         this.interactionTriggered = false;  // Ensure the cutscene plays only once
@@ -54,12 +51,9 @@ class MemoryVault extends Phaser.Scene {
 
     startExploration() {
         this.playerEnabled = true;
-        console.log("Player movement enabled. Click on the vault object to reveal the final memory.");
-
         this.vault_object.on('pointerdown', () => {
             if (!this.interactionTriggered) {
                 this.interactionTriggered = true;
-                console.log("Vault object clicked. Showing final cutscene...");
                 this.showFinalCutscene([
                     ,"The final love letter is revealed...",
                     "Everything comes rushing back to you."
@@ -104,7 +98,6 @@ class MemoryVault extends Phaser.Scene {
             this.cameras.main.fadeOut(2000, 0, 0, 0);
     
             this.time.delayedCall(2000, () => {
-                console.log("Transition complete. Returning to MainMenu.");
                 this.scene.start("MainMenu");
             });
         }

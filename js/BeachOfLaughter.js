@@ -19,11 +19,8 @@ class BeachOfLaughter extends Phaser.Scene {
         // Initialize background and player
         this.beach_background = this.add.image(896, 511, "beach_background").setDisplaySize(1792, 1022);
         this.player = new Player(this, 966, 691); 
-        console.log("Beach background and player created.");
 
         this.radio_object = this.physics.add.sprite(1626, 141, "radio_object").setInteractive().setVisible(true);
-        console.log("Music box added at: 400, 300");
-
         this.playerEnabled = false;  // Player movement is initially disabled
 
         // Start the initial dialogue
@@ -55,7 +52,6 @@ class BeachOfLaughter extends Phaser.Scene {
         this.playerEnabled = true;  // Allow player movement
 
         this.radio_object.on("pointerdown", () => {
-            console.log("Music box clicked. Starting cutscene...");
             this.showBeachCutscene([
                 , "The sunset was beautiful that day.",
                 "You listened to the music and felt completely at peace."

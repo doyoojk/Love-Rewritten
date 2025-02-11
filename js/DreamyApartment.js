@@ -20,7 +20,6 @@ class DreamyApartment extends Phaser.Scene {
         this.apt_background = this.add.image(896, 511, "apt_background").setDisplaySize(1792, 1022);
         this.player = new Player(this, 896, 511);  // Center the player
         this.trigger = this.physics.add.sprite(886, 201, "photo_frame").setInteractive().setVisible(true).setScale(1.2);
-        console.log("object created at: 896, 186");
 
         // Start the initial dialogue
         this.startDialogue([
@@ -53,7 +52,6 @@ class DreamyApartment extends Phaser.Scene {
         this.playerEnabled = true;  // Allow player movement
 
         this.trigger.on("pointerdown", () => {
-            console.log("photo_frame clicked. Starting apt_cutscene...");
             this.showapt_cutscene([ ,
                 "You see an old photo frame.",
                 "Memories of your first moments here flood back."

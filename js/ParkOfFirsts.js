@@ -56,10 +56,8 @@ class ParkOfFirsts extends Phaser.Scene {
         // Check if the player is hovering over the lake
         if (this.checkManualCollision(this.player.player, this.lake_zone)) {
             if (!this.hoverTimer) {  // Start hover timer if not already started
-                console.log("Player entered lake zone. Starting hover timer...");
                 this.hoverTimer = this.time.delayedCall(1200, () => {
                     if (this.interactionTriggered) return;  // Ensure cutscene only plays once
-                    console.log("Hover time complete. Triggering cutscene...");
                     this.interactionTriggered = true;
                     this.showLakeCutscene([
                         "The cold plunge! A moment of adventure and laughter.",
@@ -69,7 +67,6 @@ class ParkOfFirsts extends Phaser.Scene {
             }
         } else {
             if (this.hoverTimer) {
-                console.log("Player left lake zone. Resetting hover timer.");
                 this.hoverTimer.remove();  // Cancel the timer if the player leaves
                 this.hoverTimer = null;
             }
