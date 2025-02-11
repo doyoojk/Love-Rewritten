@@ -13,6 +13,10 @@ class DreamyApartment extends Phaser.Scene {
         this.load.image("player", "data/colby.png");
         this.load.audio("apt_audio", "data/apt.mp3");
         this.load.image("apt_overlay", "data/apt_overlay.png");
+        this.load.spritesheet('player_spritesheet', 'data/spritesheet.png', {
+            frameWidth: 145.2,  // Width of each frame in the sprite sheet
+            frameHeight: 245  // Height of each frame
+        });
     }
 
     create() {
@@ -21,7 +25,7 @@ class DreamyApartment extends Phaser.Scene {
         // Initialize the apt_background and interactive photo_frame
         this.apt_background = this.add.image(896, 511, "apt_background").setDisplaySize(1792, 1022);
         this.apt_overlay = this.add.image(896, 511, "apt_overlay").setDisplaySize(1792, 1022).setDepth(15);
-        this.player = new Player(this, 896, 511);  // Center the player
+        this.player = new Player(this, 896, 511, "player_spritesheet");  // Center the player
         this.trigger = this.physics.add.sprite(886, 201, "photo_frame").setInteractive().setVisible(true).setScale(1.2);
 
         // Initialize and play the apt_audio
