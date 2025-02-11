@@ -100,21 +100,14 @@ class MemoryVault extends Phaser.Scene {
             });
         } else {
             console.log("Final cutscene finished. Returning to MainMenu...");
-            cutsceneBox.destroy();
-            cutsceneText.destroy();
-            finalCutsceneImage.destroy();
-            this.transitionToMainMenu();
+            this.playerEnabled = false;
+            this.cameras.main.fadeOut(2000, 0, 0, 0);
+    
+            this.time.delayedCall(2000, () => {
+                console.log("Transition complete. Returning to MainMenu.");
+                this.scene.start("MainMenu");
+            });
         }
-    }
-
-    transitionToMainMenu() {
-        this.playerEnabled = false;
-        this.cameras.main.fadeOut(2000, 0, 0, 0);
-
-        this.time.delayedCall(2000, () => {
-            console.log("Transition complete. Returning to MainMenu.");
-            this.scene.start("MainMenu");
-        });
     }
 }
 
