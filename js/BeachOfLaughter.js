@@ -11,6 +11,7 @@ class BeachOfLaughter extends Phaser.Scene {
         this.load.image("beach_cutscene", "data/sunset_memory.png");
         this.load.image("radio_object", "data/radio.png");
         this.load.image("player", "data/colby.png");
+        this.load.audio("goldfish", "data/goldfish.mp3");  // Preload the audio
     }
 
     create() {
@@ -21,6 +22,8 @@ class BeachOfLaughter extends Phaser.Scene {
         this.player = new Player(this, 966, 691); 
 
         this.radio_object = this.physics.add.sprite(1626, 141, "radio_object").setInteractive().setVisible(true);
+        this.goldfishMusic = this.sound.add("goldfish");  // Create the audio instance
+
         this.playerEnabled = false;  // Player movement is initially disabled
 
         // Start the initial dialogue
@@ -71,8 +74,7 @@ class BeachOfLaughter extends Phaser.Scene {
         const beach_cutsceneBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
         const beach_cutsceneText = this.add.text(100, 940, beach_cutsceneLines[cutsceneIndex], { fontSize: "24px", color: "#fff" });
 
-        // Remove all previous listeners to avoid overlap
-        this.input.removeAllListeners();
+        this.goldfishMusic.play();  // Start playing the audio
 
         this.input.once('pointerdown', () => {
             this.advanceCutscene(beach_cutsceneLines, cutsceneIndex + 1, beach_cutsceneBox, beach_cutsceneText, beach_cutsceneImage);
@@ -88,10 +90,25 @@ class BeachOfLaughter extends Phaser.Scene {
             });
         } else {
             console.log("Beach cutscene finished. Transitioning to MemoryVault...");
+            this.goldfishMusicFadeOut();  // Stop the audio
             this.playerEnabled = false;
             this.cameras.main.fadeOut(2000, 0, 0, 0);
             this.time.delayedCall(1000, () => {
                 this.scene.start("MemoryVault");
+            });
+        }
+    }
+
+    goldfishMusicFadeOut() {
+        if (this.goldfishMusic.isPlaying) {
+            this.tweens.add({
+                targets: this.goldfishMusic,
+                volume: 0,
+                duration: 500,  // Fade out over 2 seconds
+                onComplete: () => {
+                    this.goldfishMusic.stop();
+                    console.log("Goldfish music faded out and stopped.");
+                }
             });
         }
     }
@@ -103,10 +120,8 @@ class BeachOfLaughter extends Phaser.Scene {
             // Restrict entry into the zone where y < 475 and x < 1580
             if (this.player.player.y < 475 && this.player.player.x < 1580) {
                 if (this.player.player.previousY >= 475) {
-                    // Block vertical movement into the restricted area
                     this.player.player.y = 475;
                 } else {
-                    // Block horizontal movement into the restricted area
                     this.player.player.x = 1580;
                 }
             }
