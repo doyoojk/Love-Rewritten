@@ -1,7 +1,7 @@
 export default class Player {
     constructor(scene, x, y, spriteKey = "player") {  // Accept spriteKey as an optional argument
         this.scene = scene;
-        this.player = scene.add.image(x, y, spriteKey).setOrigin(0.5);
+        this.player = scene.add.image(x, y, spriteKey).setOrigin(0.5).setDepth(10);
         this.keys = scene.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
             down: Phaser.Input.Keyboard.KeyCodes.S,
