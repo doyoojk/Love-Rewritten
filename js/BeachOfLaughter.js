@@ -21,6 +21,7 @@ class BeachOfLaughter extends Phaser.Scene {
 
     create() {
         console.log(`Scene BeachOfLaughter is running.`);
+        this.cameras.main.fadeIn(1000, 0, 0, 0);   
 
         // Initialize background and player
         this.beach_background = this.add.image(896, 511, "beach_background").setDisplaySize(1792, 1022);

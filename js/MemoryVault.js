@@ -20,6 +20,7 @@ class MemoryVault extends Phaser.Scene {
 
     create() {
         console.log("Scene MemoryVault is running.");
+        this.cameras.main.fadeIn(1000, 0, 0, 0);   
         // Initialize and play vault audio
         this.vault_audio = this.sound.add("vault_audio");
         this.vault_audio.play({ loop: true });
