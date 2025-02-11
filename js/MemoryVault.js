@@ -12,6 +12,10 @@ class MemoryVault extends Phaser.Scene {
         this.load.image("final_cutscene", "data/love_letter_reveal.png");
         this.load.image("player", "data/colby.png");
         this.load.audio("vault_audio", "data/vault.mp3");
+        this.load.spritesheet('player_spritesheet', 'data/spritesheet.png', {
+            frameWidth: 145.2,  // Width of each frame in the sprite sheet
+            frameHeight: 245  // Height of each frame
+        });
     }
 
     create() {
@@ -22,7 +26,7 @@ class MemoryVault extends Phaser.Scene {
 
         // Initialize background and player
         this.vault_background = this.add.image(896, 511, "vault_background").setDisplaySize(1792, 1022);
-        this.player = new Player(this, 896, 511);  // Center the player
+        this.player = new Player(this, 896, 511, "player_spritesheet");  // Center the player
         this.vault_object = this.physics.add.sprite(906, 141, "vault_object").setInteractive();
 
         this.playerEnabled = false;  // Player movement is initially disabled

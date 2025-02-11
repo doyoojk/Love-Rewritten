@@ -14,6 +14,10 @@ class HouseOfTraditions extends Phaser.Scene {
         this.load.audio("hanok_audio", "data/hanok.mp3");
         this.load.image("table_overlay", "data/table.png");
         this.load.image("bush_overlay", "data/bush.png");
+        this.load.spritesheet('player_spritesheet', 'data/spritesheet.png', {
+            frameWidth: 145.2,  // Width of each frame in the sprite sheet
+            frameHeight: 245  // Height of each frame
+        });
     }
 
     create() {
@@ -24,7 +28,7 @@ class HouseOfTraditions extends Phaser.Scene {
         this.hanok_background = this.add.image(896, 511, "hanok_background").setDisplaySize(1792, 1022);
         this.table_overlay = this.add.image(896, 511, "table_overlay").setDisplaySize(1792, 1022).setDepth(25);
         this.bush_overlay = this.add.image(896, 511, "bush_overlay").setDisplaySize(1792, 1022).setDepth(25);
-        this.player = new Player(this, 896, 511);
+        this.player = new Player(this, 896, 511, "player_spritesheet");
         this.grandma_object = this.physics.add.sprite(1571, 761, "grandma_object").setInteractive().setVisible(true).setOrigin(0.5).setScale(0.8);
         this.playerEnabled = false;  // Player movement is initially disabled
 

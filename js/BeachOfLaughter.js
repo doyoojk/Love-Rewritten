@@ -13,6 +13,10 @@ class BeachOfLaughter extends Phaser.Scene {
         this.load.image("player", "data/colby.png");
         this.load.audio("goldfish", "data/goldfish.mp3");  // Preload the audio
         this.load.audio("beach_audio", "data/beach.mp3");
+        this.load.spritesheet('player_spritesheet', 'data/spritesheet.png', {
+            frameWidth: 145.2,  // Width of each frame in the sprite sheet
+            frameHeight: 245  // Height of each frame
+        });
     }
 
     create() {
@@ -20,7 +24,7 @@ class BeachOfLaughter extends Phaser.Scene {
 
         // Initialize background and player
         this.beach_background = this.add.image(896, 511, "beach_background").setDisplaySize(1792, 1022);
-        this.player = new Player(this, 966, 691); 
+        this.player = new Player(this, 966, 691, "player_spritesheet");  // Center the player
 
         this.radio_object = this.physics.add.sprite(1626, 141, "radio_object").setInteractive().setVisible(true);
         this.goldfishMusic = this.sound.add("goldfish");  // Create the audio instance

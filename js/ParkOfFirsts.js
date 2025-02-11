@@ -14,6 +14,10 @@ class ParkOfFirsts extends Phaser.Scene {
         this.load.audio("lake_audio", "data/lake.mp3");
         this.load.audio("splash", "data/splash.wav");
         this.load.image("lake_overlay", "data/lake_overlay.png");
+        this.load.spritesheet('player_spritesheet', 'data/spritesheet.png', {
+            frameWidth: 145.2,  // Width of each frame in the sprite sheet
+            frameHeight: 245  // Height of each frame
+        });
     }
 
     create() {
@@ -22,7 +26,7 @@ class ParkOfFirsts extends Phaser.Scene {
         // Initialize background and interactive object
         this.lake_background = this.add.image(896, 511, "lake_background").setDisplaySize(1792, 1022);
         this.lake_overlay = this.add.image(896, 511, "lake_overlay").setDisplaySize(1792, 1022).setDepth(20);
-        this.player = new Player(this, 896, 511);
+        this.player = new Player(this, 896, 511, "player_spritesheet");
 
         // Initialize and play background audio
         this.lake_audio = this.sound.add("lake_audio");
