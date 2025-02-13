@@ -4,20 +4,34 @@ class MainMenu extends Phaser.Scene {
     }
 
     preload() {
-        // No image loading
+        this.load.image("mainmenu_background", "data/mainmenu.png");
+        document.fonts.load('16px "Pixelify Sans"').then(() => {
+            console.log("Pixelify Sans font loaded!");
+        });
     }
 
     create() {
-        // Clear the screen and set background to pink
-        this.cameras.main.setBackgroundColor(0xffc0cb);  // Pink background
+        // Add background
+        this.mainmenu_background = this.add.image(896, 511, "mainmenu_background").setDisplaySize(1792, 1022);
 
-        // Create a start button
-        const startButton = this.add.rectangle(this.cameras.main.centerX, this.cameras.main.centerY, 300, 80, 0xffffff).setOrigin(0.5);  // White button
-        const startText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, "Start Game", { fontSize: "32px", color: "#000" }).setOrigin(0.5);  // Centered text
+        // Title and subtitle
+        const titleText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 40, "Love, Rewritten", { fontSize: "130px", fontFamily: "Pixelify Sans", color: "#a1007e"}).setOrigin(0.5);
+        const subtitleText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 60, "a game made with love by Jamie <3", { fontSize: "30px", fontFamily: "Pixelify Sans", color: "#a1007e" }).setOrigin(0.5);
 
-        startButton.setInteractive().on("pointerdown", () => {
+        // Create a rounded rectangle using Graphics
+        const startButtonGraphics = this.add.graphics();
+        startButtonGraphics.fillStyle(0xffffff, 1);
+        startButtonGraphics.fillRoundedRect(this.cameras.main.centerX - 185, 650, 370, 100, 40); 
+
+        // Add "Start Game" text
+        const startText = this.add.text(this.cameras.main.centerX, 700, "Start Game", { fontSize: "43px", fontFamily: "Pixelify Sans", color: "#cf00a9" }).setOrigin(0.5);
+
+        // Add interactive area
+        const interactiveZone = this.add.zone(this.cameras.main.centerX, 700, 370, 100).setOrigin(0.5).setInteractive();
+
+        interactiveZone.on("pointerdown", () => {
             console.log("Starting DreamyApartment scene");
-            this.scene.start("DreamyApartment");
+            this.scene.start("BeachOfLaughter");
         });
     }
 }
