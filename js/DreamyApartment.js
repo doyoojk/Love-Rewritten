@@ -35,8 +35,9 @@ class DreamyApartment extends Phaser.Scene {
 
         // Start the initial dialogue
         this.startDialogue([
-            "This is your apartment. It feels oddly familiar.",
-            "You should look around and find something meaningful."
+            ".....Where am I?",
+            "You feel like you've been in this room before...",
+            "In a daze, you start looking around the room hoping to find something familiar.\nSomething that might help you bring back your memories..."
         ]);
 
         this.playerEnabled = false;  // Player movement is initially disabled
@@ -44,8 +45,8 @@ class DreamyApartment extends Phaser.Scene {
 
     startDialogue(dialogueLines) {
         let dialogueIndex = 0;
-        const dialogueBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
-        const dialogueText = this.add.text(100, 940, dialogueLines[dialogueIndex], { fontSize: "24px", color: "#fff" });
+        const dialogueBox = this.add.rectangle(896, 970, 1792, 300, 0x000000, 0.7).setOrigin(0.5);
+        const dialogueText = this.add.text(100, 890, dialogueLines[dialogueIndex], { fontSize: "30px", color: "#fff" });
 
         this.input.on('pointerdown', () => {
             dialogueIndex++;
@@ -81,8 +82,8 @@ class DreamyApartment extends Phaser.Scene {
     
         // Show apt_cutscene apt_background and first dialogue line
         const apt_cutsceneImage = this.add.image(896, 511, "apt_cutscene").setDisplaySize(1792, 1022);
-        const apt_cutsceneBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
-        const apt_cutsceneText = this.add.text(100, 940, apt_cutsceneLines[apt_cutsceneIndex], { fontSize: "24px", color: "#fff" });
+        const apt_cutsceneBox = this.add.rectangle(896, 970, 1792, 300, 0x000000, 0.7).setOrigin(0.5);
+        const apt_cutsceneText = this.add.text(100, 890, apt_cutsceneLines[apt_cutsceneIndex], { fontSize: "30px", color: "#fff" });
     
         // Remove all previous listeners to avoid overlap
         this.input.removeAllListeners();

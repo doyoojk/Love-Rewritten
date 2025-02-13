@@ -46,8 +46,8 @@ class ParkOfFirsts extends Phaser.Scene {
 
     startDialogue(dialogueLines) {
         let dialogueIndex = 0;
-        const dialogueBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5).setDepth(100);
-        const dialogueText = this.add.text(100, 940, dialogueLines[dialogueIndex], { fontSize: "24px", color: "#fff" }).setDepth(101);
+        const dialogueBox = this.add.rectangle(896, 970, 1792, 300, 0x000000, 0.7).setOrigin(0.5).setDepth(100);
+        const dialogueText = this.add.text(100, 890, dialogueLines[dialogueIndex], { fontSize: "30px", color: "#fff" }).setDepth(101);
 
         this.input.on('pointerdown', () => {
             dialogueIndex++;
@@ -103,8 +103,8 @@ class ParkOfFirsts extends Phaser.Scene {
         this.lake_overlay.setVisible(false);
 
         const lake_cutsceneImage = this.add.image(896, 511, "lake_cutscene").setDisplaySize(1792, 1022);
-        const lake_cutscenebox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
-        const lake_cutsceneText = this.add.text(100, 940, lake_cutscenelines[cutsceneIndex], { fontSize: "24px", color: "#fff" });
+        const lake_cutscenebox = this.add.rectangle(896, 970, 1792, 300, 0x000000, 0.7).setOrigin(0.5);
+        const lake_cutsceneText = this.add.text(100, 890, lake_cutscenelines[cutsceneIndex], { fontSize: "30px", color: "#fff" });
 
         this.input.once('pointerdown', () => {
             this.advanceCutscene(lake_cutscenelines, cutsceneIndex + 1, lake_cutscenebox, lake_cutsceneText, lake_cutsceneImage);

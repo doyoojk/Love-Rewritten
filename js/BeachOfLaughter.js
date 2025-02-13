@@ -44,8 +44,8 @@ class BeachOfLaughter extends Phaser.Scene {
 
     startDialogue(dialogueLines) {
         let dialogueIndex = 0;
-        const dialogueBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
-        const dialogueText = this.add.text(100, 940, dialogueLines[dialogueIndex], { fontSize: "24px", color: "#fff" });
+        const dialogueBox = this.add.rectangle(896, 970, 1792, 300, 0x000000, 0.7).setOrigin(0.5);
+        const dialogueText = this.add.text(100, 890, dialogueLines[dialogueIndex], { fontSize: "30px", color: "#fff" });
 
         this.input.on('pointerdown', () => {
             dialogueIndex++;
@@ -81,8 +81,8 @@ class BeachOfLaughter extends Phaser.Scene {
 
         // Show cutscene background and first dialogue line
         const beach_cutsceneImage = this.add.image(896, 511, "beach_cutscene").setDisplaySize(1792, 1022);
-        const beach_cutsceneBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
-        const beach_cutsceneText = this.add.text(100, 940, beach_cutsceneLines[cutsceneIndex], { fontSize: "24px", color: "#fff" });
+        const beach_cutsceneBox = this.add.rectangle(896, 970, 1792, 300, 0x000000, 0.7).setOrigin(0.5);
+        const beach_cutsceneText = this.add.text(100, 890, beach_cutsceneLines[cutsceneIndex], { fontSize: "30px", color: "#fff" });
 
         this.goldfishMusic.play();  // Start playing the audio
 

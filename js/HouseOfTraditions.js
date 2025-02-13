@@ -42,8 +42,8 @@ class HouseOfTraditions extends Phaser.Scene {
 
     startDialogue(dialogueLines) {
         let dialogueIndex = 0;
-        const dialogueBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5).setDepth(100);
-        const dialogueText = this.add.text(100, 940, dialogueLines[dialogueIndex], { fontSize: "24px", color: "#fff" }).setDepth(101);
+        const dialogueBox = this.add.rectangle(896, 970, 1792, 300, 0x000000, 0.7).setOrigin(0.5).setDepth(100);
+        const dialogueText = this.add.text(100, 890, dialogueLines[dialogueIndex], { fontSize: "30px", color: "#fff" }).setDepth(101);
 
         this.input.on('pointerdown', () => {
             dialogueIndex++;
@@ -81,8 +81,8 @@ class HouseOfTraditions extends Phaser.Scene {
 
         // Show cutscene background and first dialogue line
         const hanok_cutsceneImage = this.add.image(896, 511, "hanok_cutscene").setDisplaySize(1792, 1022);
-        const hanok_cutsceneBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5).setDepth(100);
-        const hanok_cutsceneText = this.add.text(100, 940, hanok_cutsceneLines[cutsceneIndex], { fontSize: "24px", color: "#fff" }).setDepth(101);
+        const hanok_cutsceneBox = this.add.rectangle(896, 970, 1792, 300, 0x000000, 0.7).setOrigin(0.5).setDepth(100);
+        const hanok_cutsceneText = this.add.text(100, 890, hanok_cutsceneLines[cutsceneIndex], { fontSize: "30px", color: "#fff" }).setDepth(101);
 
         // Remove all previous listeners to avoid overlap
         this.input.removeAllListeners();

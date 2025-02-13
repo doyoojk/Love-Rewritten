@@ -42,8 +42,8 @@ class MemoryVault extends Phaser.Scene {
 
     startDialogue(dialogueLines) {
         let dialogueIndex = 0;
-        const dialogueBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
-        const dialogueText = this.add.text(100, 940, dialogueLines[dialogueIndex], { fontSize: "24px", color: "#fff" });
+        const dialogueBox = this.add.rectangle(896, 970, 1792, 300, 0x000000, 0.7).setOrigin(0.5);
+        const dialogueText = this.add.text(100, 890, dialogueLines[dialogueIndex], { fontSize: "30px", color: "#fff" });
 
         this.input.on('pointerdown', () => {
             dialogueIndex++;
@@ -86,8 +86,8 @@ class MemoryVault extends Phaser.Scene {
 
         // Show final cutscene image and first line of dialogue
         const finalCutsceneImage = this.add.image(896, 511, "final_cutscene").setDisplaySize(1792, 1022);
-        const cutsceneBox = this.add.rectangle(896, 970, 1792, 100, 0x000000, 0.7).setOrigin(0.5);
-        const cutsceneText = this.add.text(100, 940, cutsceneLines[cutsceneIndex], { fontSize: "24px", color: "#fff" });
+        const cutsceneBox = this.add.rectangle(896, 970, 1792, 300, 0x000000, 0.7).setOrigin(0.5);
+        const cutsceneText = this.add.text(100, 890, cutsceneLines[cutsceneIndex], { fontSize: "30px", color: "#fff" });
 
         this.input.once('pointerdown', () => {
             this.advanceCutscene(cutsceneLines, cutsceneIndex + 1, cutsceneBox, cutsceneText, finalCutsceneImage);
