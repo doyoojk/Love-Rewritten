@@ -31,7 +31,7 @@ class MainMenu extends Phaser.Scene {
 
         interactiveZone.on("pointerdown", () => {
             console.log("Starting DreamyApartment scene");
-            this.scene.start("BeachOfLaughter");
+            this.scene.start("DreamyApartment");
         });
     }
 }
