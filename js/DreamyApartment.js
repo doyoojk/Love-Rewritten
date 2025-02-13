@@ -66,8 +66,14 @@ class DreamyApartment extends Phaser.Scene {
 
         this.trigger.on("pointerdown", () => {
             this.showapt_cutscene([ ,
-                "You see an old photo frame.",
-                "Memories of your first moments here flood back."
+                "You see an old photo.",,
+                "You: Is that me? And who is that person next to me?",
+                "Her: I'm glad you found this photo. Do you remember this day?",
+                "You: Whattttt? Who are you? How do you know me?",
+                "Jamie: I'm your friend Jamie. We used to live in this apartment together.",
+                ,
+                "Memories of your first moments here start flooding back.",,
+                "Jamie: Maybe this will help you remember...",
             ]);
         });
     }

@@ -39,8 +39,14 @@ class ParkOfFirsts extends Phaser.Scene {
 
         // Start initial scene dialogue
         this.startDialogue([
-            "Welcome to the park. It feels peaceful and familiar.",
-            "Perhaps there's something here that will help you remember."
+            "???!",
+            "Did I just teleport somewhere?",,
+            "Jamie: Hey don't worry, you're safe here.",
+            "Jamie: I just brought you here to help you remember.",
+            "You: Remember what? Bring me back to where I was!",
+            "Jamie: I can't do that, but I promise it'll be worth it.",,
+
+            "Perhaps there's something here that will help you remember..."
         ]);
     }
 
@@ -74,8 +80,17 @@ class ParkOfFirsts extends Phaser.Scene {
                     this.sound.play("splash");
                     this.interactionTriggered = true;
                     this.showLakeCutscene([
-                        "The cold plunge! A moment of adventure and laughter.",
-                        "You remember the joy it brought."
+                        "(SPALSH!!!!!)",
+                        "Jamie: Hahaha I guess muscle memory doesn't fail you.",
+                        "Jamie: Remember on one of our first dates, you spontaneously decided to do a cold plunge?",
+                        "You: Date? What are you talking about?...",
+                        "Jamie: Oh.. don't worry about that for now!",
+                        "You: I do remember feeling refreshed after that plunge.",
+                        "You: Do I do this often?, the memory feels so familiar.",
+                        "Jamie: You definitely did it more than once.",,
+                        "Interesting... my memories slowly flow back once I intereact with certain things.",,
+                        "You: Jamie, could you take me somewhere else? I think I know what I need to do.",
+                        "Jamie: Of course! I knew you would get it :)"
                     ]);
                 }, [], this);
             }
