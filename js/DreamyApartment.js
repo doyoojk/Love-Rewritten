@@ -7,12 +7,12 @@ class DreamyApartment extends Phaser.Scene {
 
     preload() {
         console.log("Preloading assets for DreamyApartment...");
-        this.load.image("apt_background", "data/apartment.png");
-        this.load.image("apt_cutscene", "data/apt_cutscene.png");
+        this.load.image("apt_background", "data/apartment.PNG");
+        this.load.image("apt_cutscene", "data/apt_cutscene.PNG");
         this.load.image("photo_frame", "data/photo_frame.png");
-        this.load.image("player", "data/colby.png");
+        // this.load.image("player", "data/colby.png");
         this.load.audio("apt_audio", "data/apt.mp3");
-        this.load.image("apt_overlay", "data/apt_overlay.png");
+        this.load.image("apt_overlay", "data/apt_overlay.PNG");
         this.load.spritesheet('player_spritesheet', 'data/spritesheet.png', {
             frameWidth: 145.2,  // Width of each frame in the sprite sheet
             frameHeight: 245  // Height of each frame

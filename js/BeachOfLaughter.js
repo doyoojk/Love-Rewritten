@@ -7,10 +7,10 @@ class BeachOfLaughter extends Phaser.Scene {
 
     preload() {
         console.log("Preloading assets for BeachOfLaughter...");
-        this.load.image("beach_background", "data/beach.png");
-        this.load.image("beach_cutscene", "data/beach_cutscene.png");
-        this.load.image("radio_object", "data/radio.png");
-        this.load.image("player", "data/colby.png");
+        this.load.image("beach_background", "data/beach.PNG");
+        this.load.image("beach_cutscene", "data/beach_cutscene.PNG");
+        this.load.image("radio_object", "data/radio.PNG");
+        // this.load.image("player", "data/colby.png");
         this.load.audio("goldfish", "data/goldfish.mp3");  // Preload the audio
         this.load.audio("beach_audio", "data/beach.mp3");
         this.load.spritesheet('player_spritesheet', 'data/spritesheet.png', {

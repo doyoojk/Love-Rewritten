@@ -7,13 +7,13 @@ class ParkOfFirsts extends Phaser.Scene {
 
     preload() {
         console.log("Preloading assets for ParkOfFirsts...");
-        this.load.image("lake_background", "data/lake.png");
-        this.load.image("player", "data/colby.png");
+        this.load.image("lake_background", "data/lake.PNG");
+        // this.load.image("player", "data/colby.png");
         this.load.image("lake_zone", "data/lake_zone.png");
-        this.load.image("lake_cutscene", "data/lake_cutscene.png");
+        this.load.image("lake_cutscene", "data/lake_cutscene.PNG");
         this.load.audio("lake_audio", "data/lake.mp3");
         this.load.audio("splash", "data/splash.wav");
-        this.load.image("lake_overlay", "data/lake_overlay.png");
+        this.load.image("lake_overlay", "data/lake_overlay.PNG");
         this.load.spritesheet('player_spritesheet', 'data/spritesheet.png', {
             frameWidth: 145.2,  // Width of each frame in the sprite sheet
             frameHeight: 245  // Height of each frame

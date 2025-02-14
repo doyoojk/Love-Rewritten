@@ -7,13 +7,13 @@ class HouseOfTraditions extends Phaser.Scene {
 
     preload() {
         console.log("Preloading assets for HouseOfTraditions...");
-        this.load.image("hanok_background", "data/hanok.png");
-        this.load.image("player", "data/colby.png");
-        this.load.image("grandma_object", "data/grandma.png");
-        this.load.image("hanok_cutscene", "data/hanok_cutscene.png");
+        this.load.image("hanok_background", "data/hanok.PNG");
+        // this.load.image("player", "data/colby.png");
+        this.load.image("grandma_object", "data/grandma.PNG");
+        this.load.image("hanok_cutscene", "data/hanok_cutscene.PNG");
         this.load.audio("hanok_audio", "data/hanok.mp3");
-        this.load.image("table_overlay", "data/table.png");
-        this.load.image("bush_overlay", "data/bush.png");
+        this.load.image("table_overlay", "data/table.PNG");
+        this.load.image("bush_overlay", "data/bush.PNG");
         this.load.spritesheet('player_spritesheet', 'data/spritesheet.png', {
             frameWidth: 145.2,  // Width of each frame in the sprite sheet
             frameHeight: 245  // Height of each frame

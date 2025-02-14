@@ -7,10 +7,10 @@ class MemoryVault extends Phaser.Scene {
 
     preload() {
         console.log("Preloading assets for MemoryVault...");
-        this.load.image("vault_background", "data/vault.png");
-        this.load.image("vault_object", "data/vault_object.png");
+        this.load.image("vault_background", "data/vault.PNG");
+        this.load.image("vault_object", "data/vault_object.PNG");
         this.load.image("final_cutscene", "data/collage.png");
-        this.load.image("player", "data/colby.png");
+        // this.load.image("player", "data/colby.png");
         this.load.audio("vault_audio", "data/vault.mp3");
         this.load.spritesheet('player_spritesheet', 'data/spritesheet.png', {
             frameWidth: 145.2,  // Width of each frame in the sprite sheet

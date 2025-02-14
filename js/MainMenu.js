@@ -5,9 +5,7 @@ class MainMenu extends Phaser.Scene {
 
     preload() {
         this.load.image("mainmenu_background", "data/mainmenu.PNG");
-        document.fonts.load('16px "Pixelify Sans"').then(() => {
-            console.log("Pixelify Sans font loaded!");
-        });
+        document.fonts.load('16px "Pixelify Sans"');
     }
 
     create() {
