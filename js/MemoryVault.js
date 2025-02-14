@@ -9,7 +9,7 @@ class MemoryVault extends Phaser.Scene {
         console.log("Preloading assets for MemoryVault...");
         this.load.image("vault_background", "data/vault.png");
         this.load.image("vault_object", "data/vault_object.png");
-        this.load.image("final_cutscene", "data/love_letter_reveal.png");
+        this.load.image("final_cutscene", "data/collage.png");
         this.load.image("player", "data/colby.png");
         this.load.audio("vault_audio", "data/vault.mp3");
         this.load.spritesheet('player_spritesheet', 'data/spritesheet.png', {
@@ -35,8 +35,9 @@ class MemoryVault extends Phaser.Scene {
 
         // Start initial dialogue
         this.startDialogue([
-            "You've reached the final memory.",
-            "It's time to see everything clearly."
+            "This must be the final memory...",,
+            "Jamie: You've come so far, but there's one last thing you need to do.",,
+            "It's time to open the vault and discover the truth..."
         ]);
     }
 
@@ -64,8 +65,20 @@ class MemoryVault extends Phaser.Scene {
             if (!this.interactionTriggered) {
                 this.interactionTriggered = true;
                 this.showFinalCutscene([
-                    ,"The final love letter is revealed...",
-                    "Everything comes rushing back to you."
+                    ,"The vault has opened...",
+                    "You find a letter waiting for you",,
+                    "Dear Colby,",
+                    "Happy Valentines day!",
+                    "I hope you enjoyed this experience as much as I had fun making it.",
+                    "Did I go a little overboard on the valentines day gift?",
+                    "Maybe (I am going to regret this on your bday cause idk if I can top this)",
+                    "I thought it would be fun to go through our memories together but in a fun way :)",
+                    "Though it is highly unrealistic that you would ever forget me!!!!\nI hope you had fun navigating through our memories again with me through this game",
+                    "This is my second valentines day with you,\nand I am as excited as I was to be your valentine as I was during the first",
+                    "Long distance is hard, and we both get busy with life",
+                    "And so i wanted to take a step back and just appreciate how lucky we are\nto have so many good memories to constantly remind us of what we’re working towards",
+                    "I love you so much,\nand I can't wait to continue to make beautiful memories with you <3",
+                    "Love, Jamie"
                 ]);
             }
         });
@@ -86,7 +99,7 @@ class MemoryVault extends Phaser.Scene {
 
         // Show final cutscene image and first line of dialogue
         const finalCutsceneImage = this.add.image(896, 511, "final_cutscene").setDisplaySize(1792, 1022);
-        const cutsceneBox = this.add.rectangle(896, 970, 1792, 300, 0x000000, 0.7).setOrigin(0.5);
+        const cutsceneBox = this.add.rectangle(896, 970, 1792, 300, 0x000000, 0.4).setOrigin(0.5);
         const cutsceneText = this.add.text(100, 890, cutsceneLines[cutsceneIndex], { fontSize: "30px", color: "#fff" });
 
         this.input.once('pointerdown', () => {

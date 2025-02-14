@@ -35,8 +35,14 @@ class HouseOfTraditions extends Phaser.Scene {
 
         // Start the initial dialogue
         this.startDialogue([
-            "This is a traditional Korean house.",
-            "You remember visiting here for the first time and meeting someone special."
+            "A faint smell of grilled meat fills the cold air around you...",
+            "You look up into the sky to see the stars shining brightly.",
+            "There is a warm glow coming from the house...",,
+            "You: Woah, where am I now?",
+            "Jamie: You're in Korea now! Doesn't that KBBQ look good?",
+            "You: It sure does! I might not remember much, but I know I wouldn't turn down good food.",
+            "Jamie: This night was special for me. I hope you will be able to remember it too.",
+            "You: It's a beautiful night. I can't wait to see what happens next!"
         ]);
     }
 
@@ -64,8 +70,17 @@ class HouseOfTraditions extends Phaser.Scene {
         this.grandma_object.on("pointerdown", () => {
             console.log("Grandma NPC clicked. Starting cutscene...");
             this.showHanokCutscene([
-                ,"You remember meeting her for the first time.",
-                "It was a special moment over delicious food."
+                ,"You: So... this house in Korea is your grandparent's place?",
+                "Jamie: Yes, it's a hanok. It's a traditional Korean house.",
+                "Jamie: This was a special memory for me,\I got to share a special side of me with you this night.",
+                "You: I'm sensing that I must've been a pretty important person in your life.",
+                "Jamie: okayyy getiing a little ahead of yourself there buddy",
+                "Jamie: but yes, you were very important to me.",
+                "You: I can't wait to remember more about our time together. It sounds like it was amazing.",
+                "Jamie: It was. And it will be again. I promise!",
+                "Jamie: I think you're almost ready to remember everything...",
+                "Jamie: I hope you like beaches :)",
+                "You: ??"
             ]);
         });
     }
@@ -81,7 +96,7 @@ class HouseOfTraditions extends Phaser.Scene {
 
         // Show cutscene background and first dialogue line
         const hanok_cutsceneImage = this.add.image(896, 511, "hanok_cutscene").setDisplaySize(1792, 1022);
-        const hanok_cutsceneBox = this.add.rectangle(896, 970, 1792, 300, 0x000000, 0.7).setOrigin(0.5).setDepth(100);
+        const hanok_cutsceneBox = this.add.rectangle(896, 970, 1792, 300, 0x000000, 0.4).setOrigin(0.5).setDepth(100);
         const hanok_cutsceneText = this.add.text(100, 890, hanok_cutsceneLines[cutsceneIndex], { fontSize: "30px", color: "#fff" }).setDepth(101);
 
         // Remove all previous listeners to avoid overlap

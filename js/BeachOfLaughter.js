@@ -37,8 +37,17 @@ class BeachOfLaughter extends Phaser.Scene {
 
         // Start the initial dialogue
         this.startDialogue([
-            "The sound of waves is calming.",
-            "You remember spending time here watching the sunset."
+            "You smell the salty air and the warmth of the sunset dawning on you...",
+            "The sounds of waves bring you a sense of peace",
+            "You look around hoping to see Jamie, but you're alone...",,
+            "You: Jamie? Where are you?",
+            "Jamie: I'm right here! I'm enjoying the view as well.",
+            "Jamie: You're still the same hahaha",
+            "You: In what way?",
+            "Jamie: I loved how you would share with me when you saw something beautiful.",,
+            "You remember spending time here watching the sunset",
+            "The memory still somehow seems incomplete...",
+            "Perhaps there's something here that will help me remember..."
         ]);
     }
 
@@ -66,8 +75,16 @@ class BeachOfLaughter extends Phaser.Scene {
         this.radio_object.on("pointerdown", () => {
             this.beach_audio.stop();
             this.showBeachCutscene([
-                , "The sunset was beautiful that day.",
-                "You listened to the music and felt completely at peace."
+                , "A familiar tune plays, and the memories of the beach oose back into your mind...",
+                "The laughter, the joy, the peace...",
+                "You remember that you weren't alone...",
+                "It couldn't have been alone!",,
+                "You: Jamie, I remember now.",
+                "You: It was you! You were here with me all along.",
+                "Jamie: Yes, I was always here with you.",
+                "Jamie: Everything would magically work out when we were together.",
+                "Jamie: I missed you so much.",,
+                "You: I missed you too Jamie."
             ]);
         });
     }
